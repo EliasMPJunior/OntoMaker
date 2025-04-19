@@ -57,16 +57,27 @@ export const exportSchema = (nodes, edges) => {
     const targetNode = nodes.find(n => n.id === edge.target);
     
     if (sourceNode && targetNode) {
+      // Get the actual label from the edge data
+      const edgeLabel = edge.data?.label || "has_property";
+      
       const relationship = {
         "@id": `http://example.org/relation/${edge.id}`,
         "@type": "owl:ObjectProperty",
         "label": [
-          { "@value": edge.data?.label || "has_property", "@language": "pt-br" },
-          { "@value": edge.data?.label || "has_property", "@language": "en" }
+          { "@value": edgeLabel, "@language": "pt-br" },
+          { "@value": edgeLabel, "@language": "en" }
         ],
         "domain": { "@id": sourceNode.data.uri || `http://example.org/entity/${sourceNode.id}` },
         "range": { "@id": targetNode.data.uri || `http://example.org/entity/${targetNode.id}` }
       };
+      
+      // Add descriptions if they exist
+      if (edge.data?.description) {
+        relationship.comment = [
+          { "@value": edge.data.description["pt-br"] || "", "@language": "pt-br" },
+          { "@value": edge.data.description["en"] || "", "@language": "en" }
+        ];
+      }
       
       schema["@graph"].push(relationship);
     }
