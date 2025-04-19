@@ -122,8 +122,12 @@ function App() {
       {/* Left sidebar */}
       <div className="w-64 border-r border-gray-300 dark:border-gray-700 p-4 flex flex-col relative">
         <div>
+          {/* Updated title container to use flexbox */}
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">OntoMaker</h2>
+            <div className="flex items-center space-x-2"> {/* Container for logo and title */}
+              <img src="/public/logo.png" alt="OntoMaker Logo" className="h-6 w-6" /> {/* Add the image */}
+              <h2 className="text-xl font-bold">OntoMaker</h2>
+            </div>
             <button
               onClick={toggleTheme}
               className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
